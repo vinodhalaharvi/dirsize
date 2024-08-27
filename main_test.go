@@ -76,7 +76,10 @@ func TestCalculateSizeWithErrors(t *testing.T) {
 
 	// Read captured output
 	var buf bytes.Buffer
-	io.Copy(&buf, r)
+	_, err = io.Copy(&buf, r)
+	if err != nil {
+		t.Fatalf("Failed to read captured output: %v", err)
+	}
 	output := buf.String()
 
 	if !strings.Contains(output, "Error accessing") {
@@ -119,7 +122,10 @@ func TestCalculateSize(t *testing.T) {
 
 			// Read captured output
 			var buf bytes.Buffer
-			io.Copy(&buf, r)
+			_, err = io.Copy(&buf, r)
+			if err != nil {
+				t.Fatalf("Failed to read captured output: %v", err)
+			}
 			output := buf.String()
 
 			if result != test.expected {
